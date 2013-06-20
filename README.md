@@ -8,7 +8,7 @@
 
 ##Procs vs. Lambdas
 ###Arity
-Lambdas care about how many arguments are given. Procs don't.
+Lambdas care about how many arguments they are given. Procs don't.
 ###Return syntax
 
 
