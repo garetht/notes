@@ -17,6 +17,10 @@ The browser calls itself the user agent.
 
 Two philosophies about fixing CSS: strip all the styles (reset stylesheet - Eric Meyer), or insist on consistency (normalized stylesheets).
 
+##CSS3
+
+The core of CSS is CSS 2.1. CSS3 has drop shadows and rounded corners, etc. There is a [CSS2.1 property table](http://www.w3.org/TR/CSS21/propidx.html).
+
 ##Precedence
 
 CSS a giant bag of redefining things.
@@ -25,7 +29,7 @@ CSS a giant bag of redefining things.
 
 Use as little precedence as necessary - only when there is an eception, or some state is different.
 
-Lowest precedence - declaration of tag
+###Lowest precedence - declaration of tag
 ```css
 body {
     background-color: green;
@@ -35,14 +39,17 @@ h1 {
     background-color: red;
 }
 ```
-Class Declarations
+###Class Declarations
+
+Classes are useful because they can contain state.
+
 ```css
 .hi{
     color: black;
 }
 ```
 
-ID Declarations - high precedence
+###ID Declarations - high precedence
 Generally, the more specific the selector, the higher the precedence.
 ```css
 #hi{
@@ -64,11 +71,6 @@ gets rid of something without overriding it with something specific
 }
 ```
 
-##CSS3
-
-The core of CSS is CSS 2.1. CSS3 has drop shadows and rounded corners, etc. There is a [CSS2.1 property table](http://www.w3.org/TR/CSS21/propidx.html).
-
-
 
 ##Selectors
 
@@ -86,10 +88,35 @@ figure > img{
 }
 ```
 
+###Multiple class selectors
+
+We can usually select by an ID, but in toggling, it can be useful to ensure that the parent has a class set before setting the values on the child `#id`.
+
+```css
+.hi.goodbye > #id {
+}
+```
+
 ###Attribute selectors
 Is this a good idea? Could use classes (`class = "submit-button"`) to get more specific instead of selecting all such input buttons.
+
+We can combine the above selectors and chaining 
 ```css
 input[attribute="value"] {
+}
+.hi[attribute="value"] {
+}
+input[disabled] {
+}
+input[type="submit"][disabled] {
+}
+```
 
+## Pseudoselectors
+
+Rule: push as much styling as possible into stylesheets. Use jQuery to manage classes, etc.
+
+```css
+h1:hover{
 }
 ```
