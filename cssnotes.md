@@ -195,14 +195,15 @@ Attempting to `display:none` on a hover probably doesn't work because once the m
 ```javascript
 $(document).ready(function(){
     $(".lamp button").on("click", function(event){
+        event.preventDefault();
 ```
-At this point there are two jQuery objects, and jQuery automatically binds to the one that was clicked on.
+At this point there are two jQuery objects (`.lamp` and `button`), and jQuery automatically binds to the one that was clicked on.
 
 Here is one way to change the state:
 ```javascript
         $(".lamp").toggleClass("is-on");
-    })
-})
+    });
+});
 ```
 
 But this is sloppy. There is the possbility that we may be swapping the wrong way because of user input. The button changes the state regardless of what the state actually is, and may not correspond to what the button says it does. Another way to change the state:
@@ -216,8 +217,8 @@ But this is sloppy. There is the possbility that we may be swapping the wrong wa
         else{
             lamp.addClass("is-on");
         }
-    })
-})
+    });
+});
 ```
 
 And a third method, using the optional Boolean argument of `toggleClass()`:
@@ -226,10 +227,53 @@ And a third method, using the optional Boolean argument of `toggleClass()`:
         var buttonClicked = $(this).closest("div").attr("class");
         
         lamp.toggleClass("is-on", buttonClicked == "lamp-off")
-    })
-})
+    });
+});
 ```
+
+It is probably not a good idea, either, to bind a `click` event to an input submit button. Instead, we capture the submission of the form, which will also work when the form is submitted with a keypress.
+
+```javascript
+$('form').on("submit", function(event){
+});
+```
+
+A [more complete listing of DOM events](http://en.wikipedia.org/wiki/DOM_events).
 
 ## The Box Model
 
+Only applies to `display: block`.
 
+We care about
+* width/height
+* border
+* padding
+* margin
+
+If we do not declare a width and height for a `block` element, it will expand to the full width of the page by default. This changes when you resize the browser.
+
+If we do not give it a `height`, it will take the minimum amount of height necessary. It is not that common to give things a height.
+
+Do not use percentages with pixels (different units!)
+
+Percentages: percent width of the parent container.
+
+Fixed footers: make all parents 100%, then position an element at the bottom and then move it up a bit - possible, but messy.
+
+###Padding
+Padding is outside of the width, but the background color of the element will apply to it.
+
+###Border
+Like the padding, it is another level on the outside. 
+
+The hover starts at the border.
+
+###Margins
+Given a margin of 50 pixels, no element can come within 50 pixels of it.
+
+Margin collapse: two elements with margins are allowed to approach each other to the maximum distance of the two margins, rather than the sum of the two.
+
+Negative margins: 
+
+
+##Other Display Types
