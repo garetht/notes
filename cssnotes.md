@@ -14,14 +14,18 @@
     * jQuery cannot find tags that come after a jQuery statement
 
 * `<meta charset="utf-8">`
- 
-The browser calls itself the user agent.
 
 Two philosophies about fixing CSS: strip all the styles (reset stylesheet - Eric Meyer), or insist on consistency (normalized stylesheets).
 
 ##CSS3
 
 The core of CSS is CSS 2.1. CSS3 has drop shadows and rounded corners, etc. There is a [CSS2.1 property table](http://www.w3.org/TR/CSS21/propidx.html).
+
+`min-width` and `max-width` limit the width of content - relevant to responsive design.
+```css
+width: 100%;
+max-width: 500px;
+```
 
 ## jQuery
 
@@ -266,14 +270,28 @@ Padding is outside of the width, but the background color of the element will ap
 ###Border
 Like the padding, it is another level on the outside. 
 
-The hover starts at the border.
+Events are triggered from the border inwards, not at the margin.
 
 ###Margins
 Given a margin of 50 pixels, no element can come within 50 pixels of it.
 
 Margin collapse: two elements with margins are allowed to approach each other to the maximum distance of the two margins, rather than the sum of the two.
 
-Negative margins: 
+Negative margins:
+
+What different numbers of arguments for margin specify:
+```css
+margin: top right bottom left
+margin: top/bottom right/left
+margin: 50px
+margin-left: 50px
+```
+
+`auto` margins: if you want to center a `div` on a page, given a certain width, `margin auto` will make the left and right margins take up equal space such that the `div` is centered in its container. It will not alter the vertical space.
+```css
+margin: 50px auto;
+```
+
 
 
 ##Other Display Types
