@@ -26,7 +26,7 @@ CSS a giant bag of redefining things.
 Use as little precedence as necessary - only when there is an eception, or some state is different.
 
 Lowest precedence - declaration of tag
-
+```css
     body {
         background-color: green;
     }
@@ -34,13 +34,13 @@ Lowest precedence - declaration of tag
     h1 {
         background-color: red;
     }
-
+```
 Class Declarations
-
+```css
     .hi{
         color: black;
     }
-
+```
 ##Selectors
 
 
