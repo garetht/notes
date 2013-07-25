@@ -134,20 +134,100 @@ h1:hover{
 }
 ```
 
-## Example: The Cat Toggle
+## Example: The Lamp Toggle
+
+###HTML
+HTML for the lamp: there are two states, lamp on and lamp off. By default, the lamp is off. We use the class `is-on` to declare state.
 
 ```html
-
-<div class="cat">
-    
-    
-    <div class="cat-on">
-        <strong>Cat is on</strong>
-        
+<div class="lamp is-on">
+    <div class="lamp-on">
+        <strong>Lamp is on</strong><br>
+        <button>Turn lamp off</button>
     </div>
-    
+    <div class="lamp-off">
+        <strong>Lamp is off</strong>
+        <button>Turn lamp on</button>
+    </div>
 </div>
+```
 
+###CSS 
+We use state in a binary way.
+
+Generally, using visibility to hide elements is a bad idea, because the hidden elements still take up space on the page. Use the `display` property instead. 
+* `display:none` will completely ignore the element. 
+* `<div>`s by default are block elements - the inverse of `display:none` is `display:block`
+
+```css
+.lamp-on{
+    display: none;
+}
+.lamp-off{
+    display: block;
+}
+.is-on > .lamp-on{
+    display: block;
+}
+.is-on > .lamp-off{
+    display: none;
+}
+```
+
+Using `is-on` and `is-off` instead of just one toggle can create messy states. Both `is-on` and `is-off` might accidentally be toggled at the same time, for example.
+
+And we can refactor our code to reduce repetition:
+
+```css
+.lamp-on, .is-on > .lamp-off{
+    display: none;
+}
+.lamp-off, .is-on > .lamp-on{
+    display: block;
+}
+```
+
+Attempting to `display:none` on a hover probably doesn't work because once the mouse hovers, the element disappears and the mouse no longer hvers on the element.
+
+### Javascript
+`event` has plenty of interesting stuff in it - what the target was, the position, timestamp, whether the control key was pressed, etc.
+
+```javascript
+$(document).ready(function(){
+    $(".lamp button").on("click", function(event){
+```
+At this point there are two jQuery objects, and jQuery automatically binds to the one that was clicked on.
+
+Here is one way to change the state:
+```javascript
+        $(".lamp").toggleClass("is-on");
+    })
+})
+```
+
+But this is sloppy. There is the possbility that we may be swapping the wrong way because of user input. The button changes the state regardless of what the state actually is, and may not correspond to what the button says it does. Another way to change the state:
+```javascript
+        var lamp = $(".lamp");
+        var state = $(this).closest("div").attr("class");
+        
+        if(state == "lamp-on"){
+            lamp.removeClass("is-on");
+        }
+        else{
+            lamp.addClass("is-on");
+        }
+    })
+})
+```
+
+And a third method, using the optional Boolean argument of `toggleClass()`:
+```javascript
+        var lamp = $(".lamp")
+        var buttonClicked = $(this).closest("div").attr("class");
+        
+        lamp.toggleClass("is-on", buttonClicked == "lamp-off")
+    })
+})
 ```
 
 ## The Box Model
