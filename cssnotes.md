@@ -9,9 +9,11 @@
 * `<head>` should not show up on the page, but the browser is forgiving
 
 * Not a good idea to put `<script>` tags at the start of the page - JS takes time to load
-  * Preferred way: put `<script>` tags at the very end of the page
-  * And even then continue placing jQuery in `$(document).ready()`
-  * jQuery cannot find tags that come after a jQuery statement
+    * Preferred way: put `<script>` tags at the very end of the page
+    * And even then continue placing jQuery in `$(document).ready()`
+    * jQuery cannot find tags that come after a jQuery statement
+
+* `<meta charset="utf-8">`
  
 The browser calls itself the user agent.
 
@@ -20,6 +22,17 @@ Two philosophies about fixing CSS: strip all the styles (reset stylesheet - Eric
 ##CSS3
 
 The core of CSS is CSS 2.1. CSS3 has drop shadows and rounded corners, etc. There is a [CSS2.1 property table](http://www.w3.org/TR/CSS21/propidx.html).
+
+## jQuery
+
+Always use the uncompressed version of jQuery when writing code, so that error messages will make sense.
+
+Get jQuery from Google, but fall back on a script hosted on your site if Google is down for some reason.
+
+```html
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="f/js/jquery.min.js"><\/script>')</script>
+```
 
 ##Precedence
 
@@ -71,7 +84,6 @@ gets rid of something without overriding it with something specific
 }
 ```
 
-
 ##Selectors
 
 ###Children selector - all `img` children of `figure`, no matter how deeply nested.
@@ -100,7 +112,8 @@ We can usually select by an ID, but in toggling, it can be useful to ensure that
 ###Attribute selectors
 Is this a good idea? Could use classes (`class = "submit-button"`) to get more specific instead of selecting all such input buttons.
 
-We can combine the above selectors and chaining 
+We can combine the above selectors and chaining to select tags with multiple attributes:
+
 ```css
 input[attribute="value"] {
 }
@@ -120,5 +133,23 @@ Rule: push as much styling as possible into stylesheets. Use jQuery to manage cl
 h1:hover{
 }
 ```
+
+## Example: The Cat Toggle
+
+```html
+
+<div class="cat">
+    
+    
+    <div class="cat-on">
+        <strong>Cat is on</strong>
+        
+    </div>
+    
+</div>
+
+```
+
+## The Box Model
 
 
