@@ -44,7 +44,7 @@ CSS a giant bag of redefining things.
 
 `!important` tag 
 
-Use as little precedence as necessary - only when there is an eception, or some state is different.
+Use as little precedence as necessary - only when there is an exception, or some state is different.
 
 ###Lowest precedence - declaration of tag
 ```css
@@ -191,7 +191,7 @@ And we can refactor our code to reduce repetition:
 }
 ```
 
-Attempting to `display:none` on a hover probably doesn't work because once the mouse hovers, the element disappears and the mouse no longer hvers on the element.
+Attempting to `display:none` on a hover probably doesn't work because once the mouse hovers, the element disappears and the mouse no longer hovers on the element.
 
 ### Javascript
 `event` has plenty of interesting stuff in it - what the target was, the position, timestamp, whether the control key was pressed, etc.
