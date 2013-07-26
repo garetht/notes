@@ -320,9 +320,10 @@ margin: 50px auto;
 
 ##Other Display Types
 
-Block: will expand to the full width - will not allow anything to be next to it horizontally, even if its size is constrained. If the width is set to 500px a scrollbar will appear when the browser window is smaller than 500px, but we can use the `max-width` property to allow it to be smaller than 500px.
+###Block
+Will expand to the full width - will not allow anything to be next to it horizontally, even if its size is constrained. If the width is set to 500px a scrollbar will appear when the browser window is smaller than 500px, but we can use the `max-width` property to allow it to be smaller than 500px.
 
-Float:
+###Float
 Can float right or left. Will float to left or right of the parent container. Will take up the space it needs to float left, and everything around it will just wrap around it.
 
 Floats do not take up space with regards to stacking.
@@ -334,6 +335,7 @@ clear: both;
 clear: left;
 clear: right;
 ```
+###The Clearfix
 
 Most useful for having lists of things next to each other.
 
@@ -380,13 +382,21 @@ ul:after{
  display: block;
 }
 ```
+This works in Webkit, but in other browsers you have to declare `display:table`, which also works in Webkit. This is called the clearfix.
+
+It is annoying to have to do this after every float, so we can give the `ul` a class of `group` and put the pseudocontent in `.group:after`.
+
+Use classes to modify state!
 
 
-
-Inline: follows the normal flow of the text
+###Inline
+Follows the normal flow of the text
 
 `<span>` by default is inline (`display:inline`). Cannot specify width in a `<span>`. Span elements take up no space. Can have padding, but this gets messy, so avoid. It may be useful to have inline links with padding, and the spaces between them will just show up.
 
 There are annyoing spaces between inline elements, and we can't exercise much control over them.
 
-Inline blocks: a hybrid. Act as a block inside of themselves, allowing us to set padding, width, etc., but have to obey the general rules of being an inline element. Will take up the space, but will push down the next line. Inline stuff around this will be affected by inline blocks.
+Anchor tags are by default inline, but if we want to change their background color we can make them blocks and add padding.
+
+###Inline blocks
+A hybrid. Act as a block inside of themselves, allowing us to set padding, width, etc., but have to obey the general rules of being an inline element. Will take up the space, but will push down the next line. Inline stuff around this will be affected by inline blocks.
