@@ -88,6 +88,24 @@ gets rid of something without overriding it with something specific
 }
 ```
 
+###Example: precedence
+
+In order of highest to lowest precedence, for example:
+
+* `.special > #winner.class-1.class-2`
+* `.special > #winner`
+* `#winner`
+* `p.class-1`
+* `.class-1`
+* `p`
+
+```html
+<p class="class-1">ONE</p>
+<div class="special">
+ <p class="class-1 class-2" id="winner">TWO</p>
+</div>
+```
+
 ##Selectors
 
 ###Children selector - all `img` children of `figure`, no matter how deeply nested.
@@ -131,12 +149,18 @@ input[type="submit"][disabled] {
 
 ## Pseudoselectors
 
-Rule: push as much styling as possible into stylesheets. Use jQuery to manage classes, etc.
+Rule: push as much styling as possible into stylesheets. Use jQuery to manage classes, etc. You can use the cursor property to change what the cursor looks like on hover.
+
+The `-webkit-transition` property allows transitions to happen on hovering. Other prefixes are `-moz` and `-msie`.
 
 ```css
 h1:hover{
+ cursor: pointer;
+ -webkit-transition: all 2s;
 }
 ```
+
+For links, pick a color that stands out, brighter than what you'd expect.
 
 ## Example: The Lamp Toggle
 
@@ -295,3 +319,74 @@ margin: 50px auto;
 
 
 ##Other Display Types
+
+Block: will expand to the full width - will not allow anything to be next to it horizontally, even if its size is constrained. If the width is set to 500px a scrollbar will appear when the browser window is smaller than 500px, but we can use the `max-width` property to allow it to be smaller than 500px.
+
+Float:
+Can float right or left. Will float to left or right of the parent container. Will take up the space it needs to float left, and everything around it will just wrap around it.
+
+Floats do not take up space with regards to stacking.
+
+When something is made floatable, it will take up the minimum amount of space, and other things wrap around it. But the border ignores the float, and it is possible to clear the floats so that things do not wrap around it: a element with a clear property will not wrap around a float.
+
+```css
+clear: both;
+clear: left;
+clear: right;
+```
+
+Most useful for having lists of things next to each other.
+
+```css
+ul{
+ list-style: none;
+ padding: 20px;
+ }
+ 
+li{
+ float: left;
+ width: 50px;
+ height: 50px;
+ background: red;
+ border: 5px solid yellow;
+}
+```
+
+```html
+<ul>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+</ul>
+```
+
+It is possible to fix the border by adding a `<li></li>` and clearing it `float: none`.
+
+The trick is pseudocontent, using pseudoselectors.
+
+```css
+h1:before{
+ content: "++"
+}
+```
+is equivalent to `<h1><span>++</span>Cat Click</h1>`. This gives us a new element on the page that doesn't really exist in the HTML but which we can style.
+
+```css
+ul:after{
+ content: "";
+ clear: both;
+ display: block;
+}
+```
+
+
+
+Inline: follows the normal flow of the text
+
+`<span>` by default is inline (`display:inline`). Cannot specify width in a `<span>`. Span elements take up no space. Can have padding, but this gets messy, so avoid. It may be useful to have inline links with padding, and the spaces between them will just show up.
+
+There are annyoing spaces between inline elements, and we can't exercise much control over them.
+
+Inline blocks: a hybrid. Act as a block inside of themselves, allowing us to set padding, width, etc., but have to obey the general rules of being an inline element. Will take up the space, but will push down the next line. Inline stuff around this will be affected by inline blocks.
