@@ -15,7 +15,7 @@
 
 * `<meta charset="utf-8">`
 
-Two philosophies about fixing CSS: strip all the styles (reset stylesheet - Eric Meyer), or insist on consistency (normalized stylesheets).
+Two philosophies about fixing CSS: strip all the styles (reset stylesheet - Eric Meyer), or insist on consistency ([normalized stylesheets](http://necolas.github.io/normalize.css/)).
 
 ##CSS3
 
@@ -402,7 +402,7 @@ Anchor tags are by default inline, but if we want to change their background col
 A hybrid. Act as a block inside of themselves, allowing us to set padding, width, etc., but have to obey the general rules of being an inline element. Will take up the space, but will push down the next line. Inline stuff around this will be affected by inline blocks.
 
 
-###Sidebars
+###CSS Trick: Sidebars
 Given two `<div>`s, to make a sidebar with `float:left` and content on the right panel that does not wrap around the sidebar float, use this CSS code:
 
 ```css
@@ -415,3 +415,76 @@ Given two `<div>`s, to make a sidebar with `float:left` and content on the right
 ```
 
 It is difficult to believe that this works. Isn't `overflow:auto` the default?
+
+###Button with an image in it
+
+Usually, we might put it in with an `img src`, but we really want to just have a button. It is bad to hide content in images.
+
+```html
+<button id="cat-button">CATA</button>
+```
+
+Here is a bad first solution:
+
+```css
+#cat-button{
+ display: inline-block;
+ width: 100px;
+ height: 50px;
+ text-indent: -9999px
+ background: url("cats-button.png");
+}
+```
+
+But this still leaves the text somewhere far away to be discovered in the future. Instead, learn what we used in the box model.
+
+```css
+#cat-button{
+ display: inline-block;
+ width: 100px;
+ height: 50px;
+ padding: 50px 0 0 0;
+ height: 0;
+ overflow: hidden;
+ background: url("cats-button.png") no-repeat 0 0;
+}
+```
+
+The padding is added to the top, so it pushes the text down, and changing the height to 0 ensures that it cannot be seen.
+
+```css
+#cat-button:hover{
+ background: url("cats-button-hover.png");
+}
+```
+
+But this is not the preferred way. Only when you hover over the button is a request sent to the server to load the image, and so may not appear immediately.
+
+Use PNGs for alpha transparency, and because they are a more modern file format. JPEGs are good for photography.
+
+The solution to this is to make a sprite, which combines two images into one on top of the other. We can then load the sprite in the usual way.
+
+```css
+#cat-button{
+ display: inline-block;
+ width: 100px;
+ height: 50px;
+ padding: 50px 0 0 0;
+ height: 0;
+ overflow: hidden;
+ background: url("cats-button-sprite.png") no-repeat 0 0;
+}
+```
+
+And when we want to display the second image, simply move the background upwards to reveal the bottom half of the image.
+
+```css
+#cat-button:hover{
+ background-position: 0 -50px;
+}
+```
+
+This gives us very fast loading, and also prevents an extra request to the server. To finish, drag the image into ImageOptim and squeeze all metadata out of it for the best possible loading times.
+
+##Positioning
+
