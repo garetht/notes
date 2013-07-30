@@ -492,12 +492,67 @@ You can make anything look like anything else in CSS.
 
 ##Positioning
 
+There are four different types of positioning.
+
 ###Static Positioning
 Static positioning is *the default*.
 
 
 ###Relative Positioning
+```css
+.relative{
+ position: relative;
+ top: 30px;
+}
+```
+The element will stay where it is, takes up the space that it normally would (and that is allowed for it), and allows us to use the properties top, left, right, and bottom. Usually, we use only top and left, or right and bottom. Using top/bottom or left/right will probably lead to a conflict.
+
+This pushes the element around on the page - based on its current position - without affecting anything else, and while taking up the space it would under static positioning. The cursor is considered to be hovering over the element in its new position, rather than from the space it occupied under static positioning. This allows the element to move on top of other objects.
+
+Given that we can move objects on top of each other, relative positioning also gives the z-index property, which determines the element's stack order on the page. By default, whatever element comes later in the page is of a higher rank. Relatively positioned objects are always on top of static ones. A z-index of -1 moves the element behind the page.
+
+We can use webkit-transition with relative positioning to make objects bounce about the page.
+
+```css
+.relative{
+ position: relative;
+ bottom: -40px;
+ right: 20px;
+ background: blue;
+}
+
+.relative:hover{
+ button: -40px;
+}
+```
+
+Note also that while we can change the cursor, we cannot webkit-transition it.
 
 ###Absolute Positioning
+```css
+.absolute{
+ background: orange;
+ position: absolute;
+ width: 30px;
+ height: 30px;
+}
+```
+Absolute positioning is the same as relative except it does not take up any space in the page as relatively positioned objects do (their static positions). It is rendered in the spot where it should have been rendered.
 
-###Fixed positioning.
+It is incorrect to say that absolutely positioned objects are rendered relative to the window. It is absolutely positioned relative to the closest ancestor of its that is not static. If there are no such ancestor, it picks the window.
+
+For example, if we wrapped the absolutely positioned object in a `<div>` that has `position:relative`:
+```css
+.wrap{
+ position: relative;
+ margin: 100px;
+ background: blue;
+ width: 300px;
+ height: 300px;
+}
+```
+
+
+This is very useful, not so much for layouts but for cool stuff, making things move about the page.
+
+###Fixed positioning
