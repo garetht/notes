@@ -414,7 +414,7 @@ Given two `<div>`s, to make a sidebar with `float:left` and content on the right
 }
 ```
 
-It is difficult to believe that this works. Isn't `overflow:auto` the default?
+It is difficult to believe that this works. It appears that this trick works because setting `overflow:auto` prevents the text from wrapping so that the browser can add scrollbars in a rectangular region if necessary. See the effect created with `overflow:scroll`.
 
 ###Button with an image in it
 
@@ -486,5 +486,18 @@ And when we want to display the second image, simply move the background upwards
 
 This gives us very fast loading, and also prevents an extra request to the server. To finish, drag the image into ImageOptim and squeeze all metadata out of it for the best possible loading times.
 
+The sprite technique is not confined to buttons, and it enables us to leave the text on the page, and does not mask it from Google's web crawlers.
+
+You can make anything look like anything else in CSS.
+
 ##Positioning
 
+###Static Positioning
+Static positioning is *the default*.
+
+
+###Relative Positioning
+
+###Absolute Positioning
+
+###Fixed positioning.
