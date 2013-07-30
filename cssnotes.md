@@ -509,8 +509,6 @@ The element will stay where it is, takes up the space that it normally would (an
 
 This pushes the element around on the page - based on its current position - without affecting anything else, and while taking up the space it would under static positioning. The cursor is considered to be hovering over the element in its new position, rather than from the space it occupied under static positioning. This allows the element to move on top of other objects.
 
-Given that we can move objects on top of each other, relative positioning also gives the z-index property, which determines the element's stack order on the page. By default, whatever element comes later in the page is of a higher rank. Relatively positioned objects are always on top of static ones. A z-index of -1 moves the element behind the page.
-
 We can use webkit-transition with relative positioning to make objects bounce about the page.
 
 ```css
@@ -527,6 +525,11 @@ We can use webkit-transition with relative positioning to make objects bounce ab
 ```
 
 Note also that while we can change the cursor, we cannot webkit-transition it.
+
+####z-index
+Given that we can move objects on top of each other, relative positioning also gives the z-index property, which determines the element's stack order on the page. By default, whatever element comes later in the page is of a higher rank. Relatively positioned objects are always on top of static ones. A z-index of -1 moves the element behind the page.
+
+Z-index looks at elements with z-index and compares them. Things with declared defaults (except -1) always rank above those without declared z-indexes. Those without z-indexes are ranked based on the order in which they appear on the page.
 
 ###Absolute Positioning
 ```css
@@ -552,7 +555,36 @@ For example, if we wrapped the absolutely positioned object in a `<div>` that ha
 }
 ```
 
+```html
+<div class="wrap">
+ <div class="absolute"></div>
+</div>
+```
+the object will be positioned absolutely relative to this element.
 
-This is very useful, not so much for layouts but for cool stuff, making things move about the page.
+If we set an absolute position that is off the page, and set `overflow:hidden`, the object will be moved off the page.
+
+This is very useful, not so much for layouts as for cool stuff and making things move about the page.
 
 ###Fixed positioning
+Fixed positioning positions something relative to the window and makes it stay there. This lets us make sticky navigation. It does not take up any space on the screen. It does not change when it is nested within another div (cf absolutely positioned stuff).
+
+Use fixed positioning sparingly! If the browser window is small enough the fixed element may end up taking up all of the space.
+
+When we make anything absolute or fixed (or floating), it takes the minimum amount of space necessary.
+
+```css
+.fixed{
+ position: fixed;
+ background: black;
+}
+```
+A navbar cannot declare its own bottom margin because it is taken out of the normal document flow - it does not exist. Set width to 100%, top to 0, and bottom to 0.
+
+###Final notes
+
+Do not use positioning to dictate where each element will be - this will break, unless you try to put a million breakpoints in as well. That is why we use floats.
+
+##Breakpoints
+
+Breakpoints can be used to trigger different styles in a window when it is of different sizes.
