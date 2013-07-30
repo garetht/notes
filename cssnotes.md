@@ -400,3 +400,18 @@ Anchor tags are by default inline, but if we want to change their background col
 
 ###Inline blocks
 A hybrid. Act as a block inside of themselves, allowing us to set padding, width, etc., but have to obey the general rules of being an inline element. Will take up the space, but will push down the next line. Inline stuff around this will be affected by inline blocks.
+
+
+###Sidebars
+Given two `<div>`s, to make a sidebar with `float:left` and content on the right panel that does not wrap around the sidebar float, use this CSS code:
+
+```css
+#content{
+ overflow: auto;
+}
+#sidebar{
+ float:left
+}
+```
+
+It is difficult to believe that this works. Isn't `overflow:auto` the default?
