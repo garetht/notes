@@ -587,6 +587,13 @@ Do not use positioning to dictate where each element will be - this will break, 
 
 ##Practical Example: Cat Tagger
 
+```html
+<figure class="photo is-tagged">
+ <div class="tag"></div>
+ <img src="cats.jpg" alt="cat">
+</figure>
+```
+
 Images, by default, are inline block. Take up a block amount of space but come in inline content flow (line height, etc.) Best thing to do is to make them a block - this takes away any extra whitespace on the bottom, because it is no longer inline.
 
 This stretches the width, and sets the height to be in proprtion.
@@ -632,12 +639,7 @@ A jQuery-set CSS style will always win over any style set.
 
 We can also make toggles (see some sectios above) to make a toggle that places a tag on the cat when the photo is clicked.
 
-```html
-<figure class="photo is-tagged">
- <div class="tag"></div>
- <img src="cats.jpg">
-</figure>
-```
+
 
 To position the tagging square in the right place, use the `pageX` and `pageY` attributes of the jQuery event. Avoid `clientX` and `clientY`.
 
@@ -655,7 +657,9 @@ We don't really want to store absolute pixel locations to allow for resizing now
 
 ```javascript
 $(".photo").on("click", function(event){
- ...
+ var photo = $(this);
+ photo.addClass("is-tagged");
+ 
  var x = event.pageX - photo.offset().left;
  var y = event.pageY - photo.offset().top;
  
@@ -670,13 +674,31 @@ $(".photo").on("click", function(event){
 
 This code, however, makes the tag box's top left corner appear at whereever the mouse is clicked.
 
-Do not manually subtract the size of the tag box, however, beause this will mess with the display when photos are resized. Instead, do more Javascript calculations.
+Do not manually subtract the size of the tag box, however, beause this will mess with the display when photos are resized. Instead, do more Javascript calculations. The final code:
 
 ```javascript
+$(".photo").on("click", function(event){
+ var photo = $(this);
+ photo.addClass("is-tagged");
+ 
  var x = parseFloat((event.pageX - photo.offset().left) / photo.width() * 100);
  var y = parseFloat((event.pageY - photo.offset().top) / photo.height() * 100);
+ 
+ var tag = photo.find("tag");
+ tag.css({
+  "left": x + "%";
+  "right": y + "%";
+ })
+})
+
 ```
 
+###Final Notes
+Remember to think about the closest non-static parent when using `position:absolute`.
+
+Do not keep searching for jQuery elements. Save a selector as a variable and use the variable.
+
+We can also do more calculations to prevent tag boxes from going over the borders.
 
 
 ##Bubbling
