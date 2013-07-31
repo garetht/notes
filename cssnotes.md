@@ -630,11 +630,54 @@ But this does not follow the picture around (it is contained in a static `figure
 
 A jQuery-set CSS style will always win over any style set.
 
+We can also make toggles (see some sectios above) to make a toggle that places a tag on the cat when the photo is clicked.
+
 ```html
 <figure class="photo is-tagged">
  <div class="tag"></div>
+ <img src="cats.jpg">
 </figure>
 ```
+
+To position the tagging square in the right place, use the `pageX` and `pageY` attributes of the jQuery event. Avoid `clientX` and `clientY`.
+
+```javascript
+$(".photo").on("click", function(event){
+ ...
+ var x = event.pageX
+ var y = event.pageY
+ ...
+})
+
+```
+
+We don't really want to store absolute pixel locations to allow for resizing now or in the future. We want to use percentages, which are relative to the parent container. Do this by subtracting `pageX` and `pageY` by the offset of the image's top left corner from the corner of the browser window.
+
+```javascript
+$(".photo").on("click", function(event){
+ ...
+ var x = event.pageX - photo.offset().left;
+ var y = event.pageY - photo.offset().top;
+ 
+ var tag = photo.find("tag");
+ tag.css({
+  "left": x + "px";
+  "right": y + "px";
+ })
+})
+
+```
+
+This code, however, makes the tag box's top left corner appear at whereever the mouse is clicked.
+
+Do not manually subtract the size of the tag box, however, beause this will mess with the display when photos are resized. Instead, do more Javascript calculations.
+
+```javascript
+ var x = parseFloat((event.pageX - photo.offset().left) / photo.width() * 100);
+ var y = parseFloat((event.pageY - photo.offset().top) / photo.height() * 100);
+```
+
+
 
 ##Bubbling
 
