@@ -585,9 +585,56 @@ A navbar cannot declare its own bottom margin because it is taken out of the nor
 
 Do not use positioning to dictate where each element will be - this will break, unless you try to put a million breakpoints in as well. That is why we use floats.
 
-##Breakpoints
+##Practical Example: Cat Tagger
 
-Breakpoints can be used to trigger different styles in a window when it is of different sizes.
+Images, by default, are inline block. Take up a block amount of space but come in inline content flow (line height, etc.) Best thing to do is to make them a block - this takes away any extra whitespace on the bottom, because it is no longer inline.
+
+This stretches the width, and sets the height to be in proprtion.
+```css
+.photo{
+ background: green;
+ width: 300px;
+}
+
+.photo > img{
+ display: block;
+ height: auto;
+ width: 100%;
+}
+```
+
+We can use `-webkit-transition all 2s linear`, etc. to control the manner in which the transition is made.
+
+### Making a Tag
+
+This code positions a square bordered tag on top of the image.
+
+```css
+.tag {
+ position: absolute;
+ width: 90px;
+ height: 90px;
+ background: transparent;
+ border: 5px solid blue;
+}
+```
+
+But this does not follow the picture around (it is contained in a static `figure`). To fix this, add `position:relative` to one of its containers:
+
+```css
+.photo{
+ position: relative
+ 
+}
+```
+
+A jQuery-set CSS style will always win over any style set.
+
+```html
+<figure class="photo is-tagged">
+ <div class="tag"></div>
+</figure>
+```
 
 ##Bubbling
 
