@@ -588,3 +588,19 @@ Do not use positioning to dictate where each element will be - this will break, 
 ##Breakpoints
 
 Breakpoints can be used to trigger different styles in a window when it is of different sizes.
+
+##Bubbling
+
+When adding new elements (by appending, for example), a listener that is created before those items are created will not listen to the new events.
+
+The best thing to do, when things are dynamically (or unpredictably) added to the DOM, is to pick something higher up in the hierarchy to bind to, or the most stable element. Instead of binding directly to `.grid > li`, we can bind to `<ul class="grid">` (`.grid`), and add a filter: `$(".grid").on("click", "> li", function(event){})` so that only the proper child elements respond.
+
+The concept of bubbling in Javascript: whatever element you click on will get the click event, and it will travel up to the top of the page to check if there is anyone listening to it. If you `return false` on a certain listener, however, it will stop the propagation. `preventDefault` does not stop propagation.
+
+##Building an Application
+
+Two ways to start: with the database layer, or from the views up. 
+
+Do not make all the models, then all the controllers, and all the views. Try an iterative approach. 
+
+Start with some wireframes to have a guide of what to accomplish early on.
